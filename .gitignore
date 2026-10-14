@@ -1,3 +1,9 @@
+# Python
+.venv/
+
+# For agentcore-memory-floci
+MemoryQuickstart
+
 # Local .terraform directories
 .terraform/
 

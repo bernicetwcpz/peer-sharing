@@ -113,7 +113,7 @@ python crd-short-term-memory.py
 1. Cleanup the memory
 ```bash
 cd /path/to/MemoryQuickstart
-agentcore remove memory --name CustomerSupportSemantic; 
+agentcore remove memory --name CustomerSupportSemantic 
 agentcore deploy
 agentcore status --json
 ```

@@ -15,9 +15,15 @@
 ## Prerequisites
 
 Ensure you have the following
+### Mandatory
 - Docker compose
+  - You might need to try with both `docker compose` OR `docker-compose` depending on the version of docker you use
 - AWS CLI
+
+### Optional
 - asciinema if you want to watch the demo replay of the steps being executed in the terminal `brew install asciinema`
+
+
 
 ## Table of Contents
 - [1. Setup](#1-setup)

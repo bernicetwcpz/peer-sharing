@@ -1,6 +1,5 @@
 # AgentCore Memory Hands-on with floci
 > As of time of writing (Oct 2026), floci don't support emulating long term memory
-> If you want to watch how to go through the project, use `asciinema play demo.cast -s 2` to watch it at 2x speed since it also includes the installation
 
 - The guide focused on guiding the audience to setup their environment using the examples shown in AWS Official Documentation - [Get started with AgentCore Memory](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/memory-get-started.html) on the use of agentcore-cli and the CRUD operations short-term memory only with AgentCore SDK
 
@@ -13,16 +12,8 @@
 ---
 
 ## Prerequisites
+- Complete the [Prerequisites in the root README](../README.md#prerequisites): install tools, start a fresh floci, and `./check.sh` shows all OK
 
-Ensure you have the following
-### Mandatory
-- Docker compose
-  - You might need to try with both `docker compose` OR `docker-compose` depending on the version of docker you use
-- AWS CLI
-- Python 3.12 and above (or any version that is required by the bedrock-agentcore pip package)
-
-### Optional
-- asciinema if you want to watch the demo replay of the steps being executed in the terminal `brew install asciinema`
 
 
 
@@ -37,28 +28,20 @@ Ensure you have the following
 
 ## 1. Setup
 
-1. Clone the repository 
+1. Clone the repository
 ```bash
 git clone https://github.com/bernicetwcpz/peer-sharing.git
 cd /path/to/peer-sharing
-``` 
-
-2. Install agentcore-cli
-```bash
-npm install -g @aws/agentcore
 ```
 
-3. Navigate to agentcore-memory-floci folder
+2. Follow the [root README](../README.md#prerequisites) to start a fresh floci and pass `./check.sh`
+
+3. Navigate to agentcore-memory-floci folder. If you did this exercise before, delete the old CLI project, since the fresh floci no longer has its resources
 ```bash
-cd /path/to/agentcore-memory-floci
+cd agentcore-memory-floci
+rm -rf MemoryQuickstart
 ```
 
-4. Load the required environment variables with `env-config.sh`. Bring up floci with Docker compose, you can skip this step if you have an existing floci setup
-- The `env-config.sh` contains environment variables that will ensure agentcore-cli will reference to floci, so be sure to load it!
-```bash
-source env-config.sh
-docker compose up -d
-```
 ## 2. Hands-on
 
 ### Use of agentcore-cli
@@ -98,21 +81,15 @@ agentcore status --json
 cd /path/to/agentcore-memory-floci
 ```
 
-2. Setup Python virtual env and install bedrock-agentcore package
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install bedrock-agentcore
-```
-
-2. Run `crd-short-term-memory.py` to demo the short-term memory event lifecycle
+2. Run `crd-short-term-memory.py` with `uv` to demo the short-term memory event lifecycle
+- No need to install Python or create a venv: `uv run` reads `pyproject.toml` / `uv.lock`, downloads the Python pinned in `.python-version` and installs `bedrock-agentcore` on first run
 - Create events → `session.add_turns()` (3 messages simulating USER/ASSISTANT chat)
 - Get an event → `session.get_event(event_id)`
 - List events → `session.list_events()`
 - Delete an event → `session.delete_event(event_id)`, then lists again to confirm
 - Each run uses a new timestamped `session_id`, so re-runs don't stack duplicate events
 ```bash
-python crd-short-term-memory.py
+uv run crd-short-term-memory.py
 ```
 
 
@@ -125,9 +102,4 @@ agentcore deploy
 agentcore status --json
 ```
 
-2. Stop floci container and cleanup environment variables
-```bash
-cd ..
-docker compose down
-source env-config.sh --cleanup
-```
+2. Stop floci and cleanup environment variables, see [root README](../README.md#3-stop-floci-after-the-exercise)

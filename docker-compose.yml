@@ -1,0 +1,14 @@
+services:
+  floci:
+    # image: floci/floci:latest
+    ## Currently using nightly version as it contains the required feature to work with
+    ## https://github.com/floci-io/floci/pull/5226
+    image: floci/floci:nightly-10122026
+    ports:
+      - "${FLOCI_PORT:-4566}:4566" # override if 4566 is taken by another floci
+    environment:
+      FLOCI_SERVICES_BEDROCK_AGENT_CORE_CONTROL_ENABLED: "true"
+      FLOCI_SERVICES_BEDROCK_AGENT_CORE_ENABLED: "true"
+    ## No volume on purpose: state is ephemeral. Reset per exercise with
+    ## `docker compose up -d --force-recreate floci`
+
